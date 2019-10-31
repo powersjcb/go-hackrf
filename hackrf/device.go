@@ -63,6 +63,15 @@ func Open() (*Device, error) {
 	return &d, nil
 }
 
+func OpenBySerial(serial string) (*Device, error) {
+	var d Device
+	cs := C.CString(serial)
+	if r := C.hackrf_open_by_serial(cs, &d.cdev); r != C.HACKRF_SUCCESS {
+		return nil, toError(r)
+	}
+	return &d, nil
+}
+
 func (d *Device) Close() error {
 	e := toError(C.hackrf_close(d.cdev))
 	if e == nil {
