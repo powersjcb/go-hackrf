@@ -24,6 +24,7 @@ var (
 	ErrStreamingThreadErr  = errors.New("hackrf: streaming thread error")
 	ErrStreamingStopped    = errors.New("hackrf: streaming stopped")
 	ErrStreamingExitCalled = errors.New("hackrf: streaming exit called")
+	ErrNotLastDevice       = errors.New("hackrf: one or more HackRFs still in use")
 	ErrOther               = errors.New("hackrf: other error")
 )
 
@@ -66,6 +67,8 @@ func toError(r C.int) error {
 		return ErrStreamingStopped
 	case C.HACKRF_ERROR_STREAMING_EXIT_CALLED:
 		return ErrStreamingExitCalled
+	case C.HACKRF_ERROR_NOT_LAST_DEVICE:
+		return ErrNotLastDevice
 	case C.HACKRF_ERROR_OTHER:
 		return ErrOther
 	}
