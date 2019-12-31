@@ -20,7 +20,7 @@ type Device struct {
 	callbacks []int
 }
 
-type Callback func(buf []byte) error
+type Callback func(buf []int8) error
 
 type callbackContext struct {
 	cb  Callback
@@ -47,7 +47,7 @@ func cbGo(transfer *C.hackrf_transfer, tx C.int) C.int {
 		return -1
 	}
 	n := int(transfer.valid_length)
-	goBuf := (*[1 << 30]byte)(unsafe.Pointer(transfer.buffer))[:n:n]
+	goBuf := (*[1 << 30]int8)(unsafe.Pointer(transfer.buffer))[:n:n]
 	if err := ctx.cb(goBuf); err != nil {
 		return -1
 	}

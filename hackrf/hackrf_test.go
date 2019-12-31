@@ -22,7 +22,7 @@ func TestHackRF(t *testing.T) {
 		t.Logf("Version: %s", ver)
 	}
 	total := 0
-	if err := dev.StartRX(func(buf []byte) error {
+	if err := dev.StartRX(func(buf []int8) error {
 		total += len(buf)
 		return nil
 	}); err != nil {
